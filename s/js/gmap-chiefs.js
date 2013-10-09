@@ -8,7 +8,7 @@ var map;
       new google.maps.Point(0,0),
       new google.maps.Point(192, 379));
 
-	  var marker;
+      var marker;
       var markerPos = new google.maps.LatLng(49.67912, -123.15563);
       var isPanorama = 0;
 
@@ -18,7 +18,7 @@ var map;
         return 'http://chiefs.russellgordon.org/p/' + pano + '/' + tileX + '-' + tileY + '.jpg';
       }
  
-      function createCustomPanoramaData(room, pano) {
+      function createCustomPanoramaData(scene, pano) {
         return {
           location: {
           
@@ -26,21 +26,21 @@ var map;
             pano: pano,
           
             // The text for the address control.
-            description: "Chiefs Do The Chief - " + room.name
+            description: "Chiefs Do The Chief - " + scene.name
           },
           
           // The array of links to navigate to other panoramas.
-          links: room.links,
+          links: scene.links,
           
           // The text for the copyright control.
           copyright: 'Imagery (c) 2012 R. Bucks',
           
           // The definition of the tiles for this panorama.
           tiles: {
-          	tileSize: new google.maps.Size(512, 512),
-        	worldSize: new google.maps.Size(4096, 2048),
+            tileSize: new google.maps.Size(512, 512),
+            worldSize: new google.maps.Size(4096, 2048),
             // The heading at the origin of the panorama tile set.
-            originHeading: room.originHeading,
+            originHeading: scene.originHeading,
             getTileUrl: getCustomPanoramaTileUrl
           }
         };
@@ -72,6 +72,7 @@ var map;
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           streetViewControl: true
         };
+        
         map = new google.maps.Map(document.getElementById('map'), opts);
        
         // Setup StreetView
@@ -82,30 +83,31 @@ var map;
             enableCloseButton: false,
             visible: false,
             pov : {
-		      heading: 90,
-		      pitch: 10,
-		      zoom:0
-		    },
+              heading: 90,
+              pitch: 10,
+              zoom:0
+		        },
             panoProvider: function(pano) {
-            var room = rooms[pano];
+            var scene = scenes[pano];
            
             // Hide the custom marker in StreetView if we enter the building.
-            marker.set('visible', !room);
+            marker.set('visible', !scene);
            
             // If the requested panorama is not a custom panorama, it must be a
             // normal StreetView pano ID and return null to get the StreetView
             // Maps API to load the panorama from the StreetView tiles service.
-            return room ? createCustomPanoramaData(room, pano) : null;
+            return scene ? createCustomPanoramaData(scene, pano) : null;
           }
         });
+        
         map.setStreetView(panorama);
  
-		marker = new google.maps.Marker({
-	      icon: image,
-	      map:map,
-	      draggable:false,   
-	      position: markerPos
-	    });
+        marker = new google.maps.Marker({
+          icon: image,
+          map:map,
+          draggable:false,   
+          position: markerPos
+        });
 	            
         var markerStreetView = new google.maps.Marker({
           icon: image,
@@ -115,10 +117,10 @@ var map;
         });
         
         google.maps.event.addListener(marker, 'click', togglePanorama);
-		google.maps.event.addListener(markerStreetView, 'click', togglePanorama);
-		google.maps.event.addDomListener(window, 'resize', function() {
-	      map.setCenter(chief);
-	    });
+        google.maps.event.addListener(markerStreetView, 'click', togglePanorama);
+        google.maps.event.addDomListener(window, 'resize', function() {
+          map.setCenter(chief);
+        });
                 		
         function onLinksChanged() {
           var links = panorama.get('links');
@@ -143,7 +145,7 @@ var map;
           }
         }
 
-    // The latlng of the entry point to the office on the road.
+        // The latlng of the entry point to the office on the road.
         var outsideOfficeLatLng = new google.maps.LatLng(49.67912, -123.15586);
 
         // Compute which is the nearest panorama to the position we care about.
@@ -155,9 +157,9 @@ var map;
         var client = new google.maps.StreetViewService();
         client.getPanoramaByLocation(outsideOfficeLatLng, 50, function(result, status) {
           if (status == google.maps.StreetViewStatus.OK) {
-          nearestPano = result.location.pano;
-          headingToEntry = getHeading(result.location.latLng, panoStartLatLng);
-          onLinksChanged();
+            nearestPano = result.location.pano;
+            headingToEntry = getHeading(result.location.latLng, panoStartLatLng);
+            onLinksChanged();
           }      
         });
 
