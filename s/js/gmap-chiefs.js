@@ -168,13 +168,13 @@ var map;
         google.maps.event.addListener(panorama, 'links_changed', onLinksChanged);
       }
       
-	// Toggles between map and panorama view
-		function togglePanorama(){
-		    if(isPanorama){
-		        map.streetView.setVisible(false);
-		        isPanorama = 0;
-		    } else{
-		        map.streetView.setVisible(true);
-		        isPanorama = 1;
-		    }
-		}
+      // Toggles between map and panorama view
+      function togglePanorama(){
+          if(isPanorama){
+              map.streetView.setVisible(false);
+              isPanorama = 0;
+          } else{
+              map.streetView.setVisible(true);
+              isPanorama = 1;
+          }
+      }

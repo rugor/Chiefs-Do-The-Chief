@@ -3,4 +3,22 @@ Chiefs-Do-The-Chief
 
 A custom panorama series using the Google Maps API v.3
 
-Feel free to use and modify (see license)
+Simple index.html with a javascript file pulling location data using json. Panorama images taken using Microsoft Photosynth app for iPhone, sliced up and name-changed using NameChanger for Mac
+
+Working example: 
+
+http://chiefs.russellgordon.org
+
+Software used:
+
+http://www.mrrsoftware.com/MRRSoftware/NameChanger.html
+http://photosynth.net/
+
+Inspiration/starting point:
+
+https://developers.google.com/maps/documentation/javascript/examples/streetview-custom-simple
+
+Repo downloaders beware - images are included, so it's ~40mb all told. 
+
+All images copyright me.
+Use and modify with your own images (see license)
